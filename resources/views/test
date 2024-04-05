@@ -1,0 +1,42 @@
+function removeData(id) {
+        const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
+
+        if (confirmation) {
+            // Mengirim permintaan penghapusan ke server menggunakan AJAX
+            fetch(`/delete-berkas/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+            })
+        }
+    }
+
+    function removeData(id) {
+        const confirmation = confirm('Apakah Anda yakin ingin menghapus data ini?');
+    
+        if (confirmation) {
+            // Mengirim permintaan penghapusan ke server menggunakan AJAX
+            fetch(`/delete-berkas/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                },
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result.message);
+    
+                // Setelah penghapusan berhasil, hapus elemen dari tampilan
+                const elementToRemove = document.getElementById(`berkas-${id}`);
+                if (elementToRemove) {
+                    elementToRemove.remove();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    }
