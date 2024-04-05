@@ -604,7 +604,6 @@ function hideAllKegiatan() {
 
 //fungsi untuk memilih kota
 $('#myModal').on('shown.bs.modal', function () {
-    getIdBerkas();
     var provinsiSelect = $('#provinsi');
     // Ketika modal ditampilkan, ambil data provinsi
     fetch('/get-provinsis', {
@@ -656,12 +655,12 @@ $('#provinsi').change(function () {
     })
 });
 
-fetch('/pengajuan/get', {
+fetch(`/pengajuan/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-  })
+    })
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -669,8 +668,8 @@ fetch('/pengajuan/get', {
       return response.json();
     })
     .then(result => {
-      if (result.berkasId) {
-        let $berkasId = result.berkasId;
+      if (result.berkas) {
+        let $berkasId = result.berkas;
         console.log($berkasId); // Output: 'test'
       } else {
         console.log('Tidak ada data berkasId');

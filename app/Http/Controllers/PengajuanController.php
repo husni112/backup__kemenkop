@@ -60,18 +60,20 @@ class PengajuanController extends Controller
         }
     }
 
-    public function buatPengajuan($id)
+    public function buatPengajuan($id, Request $request)
     {
-        $data = [
-            'status'=>"success",
-            'message' => "Image deleted"
-        ];
-        return view('buat-pengajuan',compact('data'));
+        if($request->isJson()){
+            $berkas = Berkas::findOrFail($id);
+            $berkasId = $berkas->id;
+            return response()->json(['berkasId' => $berkasId]);
+        }
+
+        return view('buat-pengajuan');
     }
 
-    public function getIdBerkas($id)
+    public function getIdBerkas()
     {
-        $berkasId = $id;
+        $berkasId = "test";
 
         return response()->json(['berkasId' => $berkasId]);
     }
